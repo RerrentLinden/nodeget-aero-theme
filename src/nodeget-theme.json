@@ -1,0 +1,50 @@
+{
+  "name": "Aero Theme",
+  "short": "Aero",
+  "description": "Frutiger Aero 风格的轻量展示主题：三维渲染的原创场景「被许诺的未来」、毛玻璃面板、无依赖",
+  "author": "RerrentLinden",
+  "repository": "https://github.com/RerrentLinden/nodeget-aero-theme",
+  "dist_page": "",
+  "user_preferences_form": {
+    "version": "0.0.1",
+    "items": [
+      {
+        "key": "site_name",
+        "name": "站点标题",
+        "type": "string",
+        "default": "NodeGet Status",
+        "help": "输入站点标题"
+      },
+      {
+        "key": "site_logo",
+        "name": "站点图标",
+        "type": "string",
+        "default": "",
+        "help": "输入站点图标链接，留空则使用默认的玻璃球"
+      },
+      {
+        "key": "footer",
+        "name": "页脚文本",
+        "type": "string",
+        "default": "Powered by NodeGet",
+        "help": "输入页脚文本"
+      },
+      {
+        "key": "flag_map",
+        "name": "旗帜替换",
+        "type": "string",
+        "default": "TW=CN",
+        "help": "把某个地区的旗帜换成另一面，格式 TW=CN，多个用逗号分隔，留空则不替换"
+      },
+      {
+        "key": "caption",
+        "name": "画名",
+        "type": "string",
+        "default": "被许诺的未来",
+        "help": "点右上角「看画」收起面板时，左下角显示的画名；留空则不显示"
+      }
+    ]
+  },
+  "version": "1.2.1",
+  "license": ""
+}

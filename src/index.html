@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="服务器节点实时状态">
+<meta name="theme-color" content="#1e8fe6">
+<title>NodeGet Status</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3CradialGradient id='a' cx='.42' cy='.36' r='.7'%3E%3Cstop offset='0' stop-color='%238fdcff'/%3E%3Cstop offset='.6' stop-color='%2319b5fe'/%3E%3Cstop offset='1' stop-color='%230a5ad6'/%3E%3C/radialGradient%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23a)' stroke='%23fff' stroke-width='1.5'/%3E%3Cellipse cx='12' cy='10' rx='6' ry='3.6' fill='%23fff' opacity='.85'/%3E%3C/svg%3E">
+<script>(function(){try{var d=document.documentElement,s=localStorage,m=s.getItem("aero.motion");if(s.getItem("aero.mode")==="night")d.classList.add("night");if(m==="off"||(m===null&&matchMedia("(prefers-reduced-motion: reduce)").matches))d.classList.add("still")}catch(e){}})()</script>
+<link rel="stylesheet" href="./aero.css?v=1.2.0">
+<link rel="stylesheet" href="./custom.css">
+</head>
+<body>
+<div id="scene" aria-hidden="true"><div class="stage"></div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gSpark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#19b5fe" stop-opacity=".42"/><stop offset="1" stop-color="#19b5fe" stop-opacity="0"/></linearGradient>
+<clipPath id="ocp"><circle cx="60" cy="60" r="51.5"/></clipPath>
+<radialGradient id="gOrb" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".7" stop-color="#d8f3ff" stop-opacity=".75"/><stop offset="1" stop-color="#9fd4f2" stop-opacity=".85"/></radialGradient>
+<linearGradient id="gGls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity=".04"/></linearGradient>
+</defs></svg>
+<div id="app">
+<header class="top">
+<div class="brand"><span class="logo" id="logo"></span><h1 id="site">NodeGet Status</h1></div>
+<div class="clock" id="clock" role="img" aria-label="本地时间"></div>
+<div class="tools">
+<button class="gel" id="bMap" type="button" title="节点分布" aria-label="节点分布地图"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c-3.2 3-3.2 14 0 17M12 3.5c3.2 3 3.2 14 0 17"/></svg></button>
+<button class="gel" id="bPeek" type="button" title="看画" aria-label="收起面板看画" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M3.5 15.5l4.5-4 4 3.5 3-2.5 5.5 4.5"/><circle cx="15.5" cy="9.5" r="1.3"/></svg></button>
+<button class="gel" id="bMotion" type="button" title="动效" aria-label="动效开关" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M3 9h9.5a2.5 2.5 0 1 0-2.4-3.2M3 13h14a2.6 2.6 0 1 1-2.5 3.4M3 17h6"/></svg></button>
+<button class="gel" id="bMode" type="button" title="昼 / 夜" aria-label="切换昼夜"><svg class="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.2A7.8 7.8 0 0 1 9.8 4.5a7.8 7.8 0 1 0 9.7 9.7z"/></svg><svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button>
+</div>
+</header>
+<section class="hero" aria-label="总览">
+<div class="tile glass"><span class="ico" style="--a:#6cc7ff;--b:#0a5ad6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.6"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><div><small>在线节点</small><div class="big"><span id="sOn">—</span><i id="sTot"></i></div></div><div class="sub" id="sOnSub">正在连接…</div></div>
+<div class="tile glass"><span class="ico" style="--a:#b8ec5c;--b:#3f9f37"><svg viewBox="0 0 24 24"><path d="M4.5 19.5C4 10.5 9.5 4.5 20 4c.4 10-5 16-13.5 15.5z"/><path d="M5 19C8.5 14.6 12 11.3 16.2 8.4" fill="none" stroke="#2f8a2c" stroke-width="1.4" stroke-linecap="round" opacity=".55"/></svg></span><div><small>平均 CPU</small><div class="big" id="sCpu">—</div></div><div class="sub"><span class="tube"><i class="f cpu" id="sCpuBar"></i></span></div></div>
+<div class="tile glass"><span class="ico" style="--a:#8fe0ff;--b:#19a5f3"><svg viewBox="0 0 24 24"><path d="M12 2.8c-3.6 5-6.2 8.3-6.2 11.6a6.2 6.2 0 0 0 12.4 0c0-3.3-2.6-6.6-6.2-11.6z"/><path d="M8.8 14.6a3.3 3.3 0 0 0 2.5 3.1" fill="none" stroke="#19a5f3" stroke-width="1.4" stroke-linecap="round" opacity=".6"/></svg></span><div><small>平均内存</small><div class="big" id="sMem">—</div></div><div class="sub"><span class="tube"><i class="f mem" id="sMemBar"></i></span></div></div>
+<div class="tile glass"><span class="ico" style="--a:#a9d3ee;--b:#3d86c9"><svg viewBox="0 0 24 24"><path d="M7.2 18.5a4.3 4.3 0 0 1-.5-8.6 5.8 5.8 0 0 1 11.2 1.3 3.7 3.7 0 0 1-.6 7.3z"/></svg></span><div><small>实时网速</small><div class="big sp2"><span class="up" id="sUp">↑ —</span><span class="dn" id="sDn">↓ —</span></div></div><div class="sub"><svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><polygon class="sa" id="gA"/><polyline class="sl" id="gL"/></svg><span id="sTr"></span></div></div>
+</section>
+<nav class="pills" id="pills" aria-label="按地区筛选"></nav>
+<main class="list glass">
+<div class="lh" aria-hidden="true"><span>节点</span><span>CPU</span><span>内存</span><span>磁盘</span><span>网络</span><span class="r">运行</span><span>CPU 趋势</span></div>
+<div id="rows"></div>
+<p class="msg" id="msg">正在连接后端…</p>
+</main>
+<footer class="foot"><span><i class="orb" id="lk"></i><span id="lkT">连接中</span></span><span id="fN"></span><span id="ft">Powered by NodeGet</span></footer>
+<p class="cap" id="cap">被许诺的未来</p>
+<noscript><p class="msg glass">这个页面需要启用 JavaScript 才能显示节点状态。</p></noscript>
+</div>
+<script src="./aero.js?v=1.2.0" defer></script>
+<script src="./live.js?v=1.2.1" defer></script>
+<script src="./custom.js" defer></script>
+</body>
+</html>

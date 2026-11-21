@@ -1,0 +1,16 @@
+{
+  "user_preferences": {
+    "site_name": "NodeGet Status",
+    "site_logo": "",
+    "footer": "Powered by NodeGet",
+    "flag_map": "TW=CN",
+    "caption": "被许诺的未来"
+  },
+  "site_tokens": [
+    {
+      "name": "main",
+      "backend_url": "wss://nodeget.example.com/nodeget/rpc",
+      "token": ""
+    }
+  ]
+}
