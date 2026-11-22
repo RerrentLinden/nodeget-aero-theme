@@ -91,3 +91,7 @@ node tools/dev-server.mjs
 ## 数据来源
 
 `map.json` 由 [Natural Earth](https://www.naturalearthdata.com/) 的 1:50m 国家边界（公有领域）简化而来，见 `tools/build-map.py`。
+
+## 许可
+
+[MIT](LICENSE)。代码、着色器和背景画都按这个许可发布。
